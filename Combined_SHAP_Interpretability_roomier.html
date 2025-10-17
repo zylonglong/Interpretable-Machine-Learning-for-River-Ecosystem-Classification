@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive SHAP Interpretability Visualization</title>
+  <style>
+    :root { --brand:#11325D; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: Arial, sans-serif; }
+    header { background: var(--brand); color: #fff; padding: 10px 16px; }
+    h1 { font-size: 18px; margin: 0; font-weight: 600; }
+    .tabs { display: flex; gap: 8px; padding: 6px 10px; background: #f5f7fa; border-bottom: 1px solid #e6e9ef; position: sticky; top: 0; z-index: 2; }
+    .tab-btn { border: 1px solid #cfd6e4; background: #fff; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+    .tab-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+    /* Make the viewport for the frames larger by reducing overhead and using more of the screen */
+    .frame-wrap { position: fixed; top: 56px; /* header( ~32px) + tabs( ~24px) */ left: 0; right: 0; bottom: 0; }
+    iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+    footer { display:none; }
+    @media (min-width: 768px) {
+      h1 { font-size: 20px; }
+      .tab-btn { font-size: 14px; padding: 8px 12px; }
+      .tabs { padding: 8px 12px; }
+      .frame-wrap { top: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interactive SHAP Interpretability Visualization</h1>
+  </header>
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active">River Habitat Types (XGBoost)</button>
+    <button class="tab-btn">River Formation Classes (CatBoost)</button>
+    <button class="tab-btn">Non-native Fish Invasion Gradient (CatBoost)</button>
+  </nav>
+  <section class="frame-wrap">
+    <iframe src="River_habitat_types_XGBoost_Shap.html" title="River Habitat Types (XGBoost)" style="display:block;"></iframe>
+    <iframe src="River_Formation_Classes_Catboost_Shap.html" title="River Formation Classes (CatBoost)" style="display:none;"></iframe>
+    <iframe src="Non-native_Fish_Invasion_Gradient_Catboost_Shap.html" title="Non-native Fish Invasion Gradient (CatBoost)" style="display:none;"></iframe>
+  </section>
+  <script>
+    const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+    const frames = Array.from(document.querySelectorAll('iframe'));
+    function activate(i) {
+      buttons.forEach((b, idx) => b.classList.toggle('active', idx===i));
+      frames.forEach((f, idx) => f.style.display = idx===i ? 'block' : 'none');
+      try { localStorage.setItem('shap_active_tab', i); } catch(e){}
+    }
+    buttons.forEach((b, i) => b.addEventListener('click', () => activate(i)));
+    let idx = 0;
+    try {
+      const saved = parseInt(localStorage.getItem('shap_active_tab'));
+      if (!isNaN(saved)) idx = saved;
+    } catch(e){}
+    activate(idx);
+  </script>
+</body>
+</html>
