@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive SHAP Interpretability Visualization</title>
+  <style>
+    body {{ font-family: Arial, sans-serif; margin: 0; }}
+    header {{ background: #11325D; color: #fff; padding: 16px 20px; }}
+    h1 {{ font-size: 20px; margin: 0; }}
+    .tabs {{ display: flex; gap: 8px; padding: 10px 12px; background: #f5f7fa; border-bottom: 1px solid #e6e9ef; position: sticky; top: 0; z-index: 1; }}
+    .tab-btn {{ border: 1px solid #cfd6e4; background: #fff; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; }}
+    .tab-btn.active {{ background: #11325D; color: #fff; border-color: #11325D; }}
+    .frame-wrap {{ width: 100%; height: calc(100vh - 96px); }}
+    iframe {{ width: 100%; height: 100%; border: 0; background: #fff; }}
+    footer {{ padding: 10px 16px; font-size: 12px; color: #666; border-top: 1px solid #e6e9ef; }}
+    .note {{ color: #11325D; font-weight: 600; }}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interactive SHAP Interpretability Visualization</h1>
+  </header>
+  <nav class="tabs" id="tabs">
+    <button class="tab-btn active">River Habitat Types (XGBoost)</button>
+    <button class="tab-btn">River Formation Classes (CatBoost)</button>
+    <button class="tab-btn">Non-native Fish Invasion Gradient (CatBoost)</button>
+  </nav>
+  <section class="frame-wrap">
+    <iframe src="River_habitat_types_XGBoost_Shap.html" title="River Habitat Types (XGBoost)" style="display:block;"></iframe>
+    <iframe src="River_Formation_Classes_Catboost_Shap.html" title="River Formation Classes (CatBoost)" style="display:none;"></iframe>
+    <iframe src="Non-native_Fish_Invasion_Gradient_Catboost_Shap.html" title="Non-native Fish Invasion Gradient (CatBoost)" style="display:none;"></iframe>
+  </section>
+  <footer>
+    <span class="note">Tip:</span> Use the tabs to switch between tasks. Each tab loads the full interactive HTML you provided.
+  </footer>
+  <script>
+    const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+    const frames = Array.from(document.querySelectorAll('iframe'));
+    function activate(i) {{ 
+      buttons.forEach((b, idx) => b.classList.toggle('active', idx===i));
+      frames.forEach((f, idx) => f.style.display = idx===i ? 'block' : 'none');
+      try {{ localStorage.setItem('shap_active_tab', i); }} catch(e){{}}
+    }}
+    buttons.forEach((b, i) => b.addEventListener('click', () => activate(i)));
+    let idx = 0;
+    try {{
+      const saved = parseInt(localStorage.getItem('shap_active_tab'));
+      if (!isNaN(saved)) idx = saved;
+    }} catch(e){{}}
+    activate(idx);
+  </script>
+</body>
+</html>
