@@ -11,4 +11,3 @@ Non-native Fish Invasion Gradient
 This project supports the explainable machine learning components of a freshwater ecological modeling study. The models were developed using CatBoost & Randomforest, and SHAP (SHapley Additive exPlanations) was applied to quantify the feature contributions across samples and tasks.
 The interactive HTML files allow detailed, sample-specific exploration of SHAP values and enhance the transparency of model decisions.
 
-These materials are referenced in the main manuscript and supplementary materials (e.g., Supplementary Data S1–S3).
