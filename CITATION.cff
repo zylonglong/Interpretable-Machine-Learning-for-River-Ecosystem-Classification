@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: "Interpretable Machine Learning for River Ecosystem Classification"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Zhang
+    given-names: Yu
+  - family-names: Liu
+    given-names: Hongqi
+  - family-names: Li
+    given-names: Hao
+  - family-names: Tang
+    given-names: Yi
+  - family-names: Ma
+    given-names: Yichi
+  - family-names: Zha
+    given-names: Jinmiao
+  - family-names: Ma
+    given-names: Xufa
+repository-code: "https://github.com/zylonglong/Interpretable-Machine-Learning-for-River-Ecosystem-Classification"
+abstract: "Python scripts for preprocessing aquatic community data, training tree-based machine-learning models, evaluating classification performance, and generating SHAP-based model interpretations for urban river invasion analysis."
+license: MIT
+version: 1.0.0
+date-released: 2026-05-27
+keywords:
+  - machine learning
+  - SHAP
+  - non-native fish
+  - urban rivers
+  - aquatic community
